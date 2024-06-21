@@ -2,42 +2,40 @@ Below is the code I used for the Arduino Uno R3 and Buzzer Game Hat. <br> <br>
 
 
 ```ruby
-// #Define the LED pins
-const int RED1 = 0;        // #Player 1 Red LED
-const int BLUE1 = 1;       // #Player 1 Blue LED
-const int GREEN1 = 2;      // #Player 1 Green LED
+// Define the LED pins
 
-const int RED2 = 6;        // #Player 2 Red LED
-const int BLUE2 = 5;       // #Player 2 Blue LED
-const int GREEN2 = 4;      // #Player 2 Green LED
+const int sleepButton = 14; // #Sleep Button         A0
+const int MuteButton = 15;  // #Mute Button          A1
+const int RED1 = 16;        // ##Player 1 Red LED    A2
+const int BLUE1 = 17;       // ##Player 1 Blue LED   A3
+const int GREEN1 = 18;      // ##Player 1 Green LED  A4
+const int buttonC = 19;     // ##Button C -          A5
 
-const int buttonA = 8;     // #Button A
-const int buttonB = 9;     // #Button B
-const int buttonC = 3;     // #Button C
-const int sleepButton = 19; // #Sleep Button A5
-const int MuteButton = 16;  // #Mute Button A2
+const int BuzzerP2 = 9;     // #Player 2 Buzzer -    D9
+const int BuzzerP1 = 8;     // #Player 1 Buzzer -    D8
+const int buttonB = 7;      // #Button B -          D7
+const int buttonA = 6;      // #Button A -          D6
+const int ClearLED = 5;     // #Clear Button LED -   D5
+const int RED2 = 4;         // #Player 1 Red LED    D4
+const int BLUE2 = 3;        // #Player 1 Blue LED   D3
+const int GREEN2 = 2;       // #Player 1 Green LED  D2
 
-const int BuzzerP1 = 10;  // #Player 1 Buzzer
-const int BuzzerP2 = 11;  // #Player 2 Buzzer
-const int ClearLED = 12;  // #Clear Button LED
 
-// #This Wait for Clear tag will not let any buzzers or color changes until the CLear Button is pressed.
 int WaitForClear = 0; // #Initialize the variable
 
 // #Variables to store the previous state of each button
 bool prevButtonAState = LOW;
 bool prevButtonBState = LOW;
 bool prevButtonCState = HIGH; // #Initial state is HIGH because of internal pull-up resistor
-bool sleepButtonState = HIGH; // #Initial state is HIGH because of internal pull-up resistor
-bool MuteButtonState = HIGH;  // #Initial state is HIGH because of internal pull-up resistor
+bool sleepButtonState = HIGH;
+bool MuteButtonState = HIGH;
 
 void setup() {
-
-  //#Serial.begin(9600); // Start the Serial communication
-  //#Serial.println("Game is Starting ");
-  //#Serial.println("");
-
   // #Initialize each pin as an output
+  // #Serial.begin(9600); // Start the Serial communication
+  // #Serial.println("Game is Starting ");
+  // #Serial.println("");
+
   pinMode(RED1, OUTPUT);
   pinMode(BLUE1, OUTPUT);
   pinMode(GREEN1, OUTPUT);
@@ -58,10 +56,10 @@ void setup() {
   pinMode(buttonA, INPUT);         // #Button A with external pull-down resistor
   pinMode(buttonB, INPUT);         // #Button B with external pull-down resistor
   pinMode(buttonC, INPUT_PULLUP);  // #Button C with internal pull-up resistor
-  pinMode(sleepButton, INPUT);     // #Sleep button with internal pull-DOWN resistor
-  pinMode(MuteButton, INPUT);     // #Mute button with internal pull-DOWN resistor
+  pinMode(sleepButton, INPUT); // #Sleep button with internal pull-DOWN resistor
+  pinMode(MuteButton, INPUT); // #Mute button with internal pull-DOWN resistor
 
-  // #Turn on all LEDs in order for a startup sequence
+  // #Turn on all LEDs
   ClearLEDs();
   delay(500);
 
@@ -109,7 +107,7 @@ void loop() {
   }
 
   // #Check if the sleep button is pressed
-  if (sleepButtonState == HIGH) {  //Change to Low when using it in the box
+  if (sleepButtonState == HIGH) {  //# Change to Low when using it in the box
     digitalWrite(ClearLED, LOW); 
     digitalWrite(BuzzerP1, LOW); 
     digitalWrite(BuzzerP2, LOW); 
